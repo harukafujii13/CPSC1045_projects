@@ -62,10 +62,8 @@ canvas.addEventListener("click", function (event) {
   const row = Math.floor(y / 100);
 
   console.log(`row: ${row}, col: ${col}`);
-
-  const value = board[row][col];
-  alert(value || "");
 });
+
 
 // step1_assigment2
 function Piece(row, col, color) {
@@ -75,3 +73,8 @@ function Piece(row, col, color) {
   this.isClicked = false;
   this.isKing = false;
 }
+
+// Assignment 2
+// Step 2
+function draw() {}
+

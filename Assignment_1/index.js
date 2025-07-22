@@ -62,7 +62,4 @@ canvas.addEventListener("click", function (event) {
   const row = Math.floor(y / 100);
 
   console.log(`row: ${row}, col: ${col}`);
-
-  const value = board[row][col];
-  alert(value || "");
 });

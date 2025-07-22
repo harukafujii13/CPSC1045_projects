@@ -14,17 +14,16 @@ for (let row = 0; row < 8; row++) {
   }
 }
 
-
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
 function drawPieces() {
   for (let x = 0; x < board.length; x++) {
-    for (let y = 0; y < board[y].length; y++) {
+    for (let y = 0; y < board[x].length; y++) {
       if (board[x][y] == "red" || board[x][y] == "gray") {
         ctx.fillStyle = board[x][y];
         ctx.beginPath();
-        ctx.arc(x * 100 + 50,  y * 100 + 50, 35, 0, 2 * Math.PI);
+        ctx.arc(y * 100 + 50, x * 100 + 50, 35, 0, 2 * Math.PI);
         ctx.fill();
       }
     }

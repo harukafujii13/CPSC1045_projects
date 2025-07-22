@@ -66,3 +66,12 @@ canvas.addEventListener("click", function (event) {
   const value = board[row][col];
   alert(value || "");
 });
+
+// step1_assigment2
+function Piece(row, col, color) {
+  this.row = row;
+  this.col = col;
+  this.color = color;
+  this.isClicked = false;
+  this.isKing = false;
+}

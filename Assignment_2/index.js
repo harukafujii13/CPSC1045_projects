@@ -5,11 +5,11 @@ for (let row = 0; row < 8; row++) {
 
   for (let col = 0; col < 8; col++) {
     if (row < 3 && (row + col) % 2 === 1) {
-      board[row][col] = "gray";
+      board[row][col] = new Piece(row, col, "gray");
     } else if (row > 4 && (row + col) % 2 === 1) {
-      board[row][col] = "red";
+      board[row][col] = new Piece(row, col, "red");
     } else {
-      board[row][col] = "";
+      board[row][col] = null;
     }
   }
 }
@@ -20,11 +20,9 @@ let ctx = canvas.getContext("2d");
 function drawPieces() {
   for (let x = 0; x < board.length; x++) {
     for (let y = 0; y < board[x].length; y++) {
-      if (board[x][y] == "red" || board[x][y] == "gray") {
+      if (board[x][y] != null) {
         ctx.fillStyle = board[x][y];
-        ctx.beginPath();
-        ctx.arc(y * 100 + 50, x * 100 + 50, 35, 0, 2 * Math.PI);
-        ctx.fill();
+        board[x][y].draw(ctx);
       }
     }
   }
@@ -72,9 +70,18 @@ function Piece(row, col, color) {
   this.color = color;
   this.isClicked = false;
   this.isKing = false;
+
+  this.draw = function(ctx){
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.col * 100 +50, this.row * 100 + 50, 35, 0, 2 * Math.PI);
+    ctx.fill();
+  }
 }
 
 // Assignment 2
 // Step 2
 function draw() {}
 
+// step3_assignment2
+// refactored some functions

@@ -74,7 +74,7 @@ function Piece(row, col, color) {
   this.draw = function(ctx){
     ctx.fillStyle = this.color;
     ctx.beginPath();
-    ctx.arc(this.col * 100 +50, this.row * 100 + 50, 35, 0, 2 * Math.PI);
+    ctx.arc(this.col * 100 + 50, this.row * 100 + 50, 35, 0, 2 * Math.PI);
     ctx.fill();
   }
 }
@@ -85,3 +85,16 @@ function draw() {}
 
 // step3_assignment2
 // refactored some functions
+
+// step4_assignment2
+function getSelectedPiece() {
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      let piece = board[row][col];
+      if (piece !== null && piece.isClicked === true) {
+        return piece;
+      }
+    }
+  }
+  return null;
+}

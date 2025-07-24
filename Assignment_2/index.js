@@ -50,7 +50,7 @@ window.addEventListener("load", () => {
   drawPieces();
 });
 
-//Step6
+//Step6_assignment2
 canvas.addEventListener("click", function (event) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
@@ -59,11 +59,24 @@ canvas.addEventListener("click", function (event) {
   const col = Math.floor(x / 100);
   const row = Math.floor(y / 100);
 
-  console.log(`row: ${row}, col: ${col}`);
+  // console.log(`row: ${row}, col: ${col}`);
+
+  const clickedPiece = board[row][col];
+  if (clickedPiece !== null) {
+    const selectedPiece = getSelectedPiece();
+
+    if (selectedPiece && selectedPiece !== clickedPiece) {
+      selectedPiece.isClicked = false;
+      clickedPiece.isClicked = !clickedPiece.isClicked;
+    } else if (!selectedPiece || selectedPiece === clickedPiece) {
+      clickedPiece.isClicked = !clickedPiece.isClicked;
+    }
+  }
+  drawBoard();
+  drawPieces();
 });
 
-
-// step1_assigment2
+// step1,2_assignment2
 function Piece(row, col, color) {
   this.row = row;
   this.col = col;
@@ -71,17 +84,24 @@ function Piece(row, col, color) {
   this.isClicked = false;
   this.isKing = false;
 
-  this.draw = function(ctx){
+  // step5_assignment2
+  this.draw = function (ctx) {
+    const centerX = this.col * 100 + 50;
+    const centerY = this.row * 100 + 50;
+
+    if (this.isClicked) {
+      ctx.fillStyle = "yellow";
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
     ctx.fillStyle = this.color;
     ctx.beginPath();
-    ctx.arc(this.col * 100 + 50, this.row * 100 + 50, 35, 0, 2 * Math.PI);
+    ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
     ctx.fill();
-  }
+  };
 }
-
-// Assignment 2
-// Step 2
-function draw() {}
 
 // step3_assignment2
 // refactored some functions

@@ -98,3 +98,4 @@ function getSelectedPiece() {
   }
   return null;
 }
+

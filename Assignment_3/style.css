@@ -1,0 +1,29 @@
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 20px;
+  background-color: #e5ebf1;
+}
+
+h1 {
+  margin-bottom: 10px;
+  color: #4a556d;
+  text-align: center;
+}
+
+p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #4a556d;
+  text-align: center;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #4a556d;
+}

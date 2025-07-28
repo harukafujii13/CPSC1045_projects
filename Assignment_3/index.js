@@ -97,8 +97,8 @@ function Piece(row, col, color) {
   this.isKing = false;
   this.checkKing = function () {
     if (
-      (this.color == "red" && this.row == 0) || // 0と7が逆?
-      (this.color == "gray" && this.row == 7)
+      (this.color == "red" && this.row == 7) ||
+      (this.color == "gray" && this.row == 0)
     ) {
       this.isKing = true;
     }

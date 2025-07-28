@@ -83,76 +83,81 @@ function Piece(row, col, color) {
   this.color = color;
   this.isClicked = false;
   this.isKing = false;
-  this.checkKing = function(){
-    if((this.color == "red" && this.row == 0) ||
-      (this.color == "gray" && this.row == 7)){
-        this.isKing = true;
-      }
-    };
-    this.isValidMove = function(newRow, newCol){
-      if(newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8){
-        return false;
-      }
-      if((newRow + newCol) % 2 == 0) {
-        return false;
-      }
-      if (board[newRow][newCol] != null) {
-        return false;
-      }
-
-      let rowDiff = newRow - this.row;
-      let colDiff = newCol - this.col;
-
-      if ((colDiff == 1 || colDiff == -1) && (
-      (this.isKing && (rowDiff == 1 || rowDiff == -1)) || 
-      (this.color == "red" && rowDiff == -1) || 
-      (this.color == "gray" && rowDiff == 1)
-      )
+  this.checkKing = function () {
+    if (
+      (this.color == "red" && this.row == 0) || // 0と7が逆?
+      (this.color == "gray" && this.row == 7)
     ) {
-        return true;
-      }
-
-      if (
-        (colDiff === 2 || colDiff === -2) &&
-        (
-          (this.isKing && (rowDiff === 2 || rowDiff === -2)) ||
-          (this.color === "red" && rowDiff === -2) ||
-          (this.color === "gray" && rowDiff === 2)
-        )
-      ) {
-        const middleRow = (this.row + newRow) / 2;
-        const middleCol = (this.col + newCol) / 2;
-        const middlePiece = board[middleRow][middleCol];
-    
-        if (middlePiece !== null && middlePiece.color !== this.color) {
-        
-          board[middleRow][middleCol] = null;
-          return true;
-        }
-      }
-      
-      return false;
-    };
-  }
-
-  // step5_assignment2
-  this.draw = function (ctx) {
-    const centerX = this.col * 100 + 50;
-    const centerY = this.row * 100 + 50;
-
-    if (this.isClicked) {
-      ctx.fillStyle = "yellow";
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
-      ctx.fill();
+      this.isKing = true;
     }
-
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
-    ctx.fill();
   };
 
+  this.move = function (newRow, newCol) {
+    this.row = newRow;
+    this.col = newCol;
+    this.checkKing();
+  };
+
+  this.isValidMove = function (newRow, newCol) {
+    if (newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8) {
+      return false;
+    }
+    if ((newRow + newCol) % 2 == 0) {
+      return false;
+    }
+    if (board[newRow][newCol] != null) {
+      return false;
+    }
+
+    let rowDiff = newRow - this.row;
+    let colDiff = newCol - this.col;
+
+    if (
+      (colDiff == 1 || colDiff == -1) &&
+      ((this.isKing && (rowDiff == 1 || rowDiff == -1)) ||
+        (this.color == "red" && rowDiff == -1) ||
+        (this.color == "gray" && rowDiff == 1))
+    ) {
+      return true;
+    }
+
+    if (
+      (colDiff === 2 || colDiff === -2) &&
+      ((this.isKing && (rowDiff === 2 || rowDiff === -2)) ||
+        (this.color === "red" && rowDiff === -2) ||
+        (this.color === "gray" && rowDiff === 2))
+    ) {
+      const middleRow = (this.row + newRow) / 2;
+      const middleCol = (this.col + newCol) / 2;
+      const middlePiece = board[middleRow][middleCol];
+
+      if (middlePiece !== null && middlePiece.color !== this.color) {
+        board[middleRow][middleCol] = null;
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
+
+// step5_assignment2
+this.draw = function (ctx) {
+  const centerX = this.col * 100 + 50;
+  const centerY = this.row * 100 + 50;
+
+  if (this.isClicked) {
+    ctx.fillStyle = "yellow";
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
+  ctx.fill();
+};
 
 // step3_assignment2
 // refactored some functions
@@ -169,4 +174,3 @@ function getSelectedPiece() {
   }
   return null;
 }
-

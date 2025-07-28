@@ -71,6 +71,18 @@ canvas.addEventListener("click", function (event) {
     } else if (!selectedPiece || selectedPiece === clickedPiece) {
       clickedPiece.isClicked = !clickedPiece.isClicked;
     }
+  } else {
+    const selectedPiece = getSelectedPiece();
+
+    if (selectedPiece && selectedPiece.isValidMove(row, col)) {
+      board[selectedPiece.row][selectedPiece.col] = null;
+
+      selectedPiece.move(row, col);
+
+      board[row][col] = selectedPiece;
+
+      selectedPiece.isClicked = false;
+    }
   }
   drawBoard();
   drawPieces();
@@ -139,25 +151,48 @@ function Piece(row, col, color) {
 
     return false;
   };
+
+  this.draw = function (ctx) {
+    const centerX = this.col * 100 + 50;
+    const centerY = this.row * 100 + 50;
+
+    if (this.isClicked) {
+      ctx.fillStyle = "yellow";
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
+    ctx.fill();
+
+    if (this.isKing) {
+      // face
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // eyes
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(centerX - 3, centerY - 3, 1.5, 0, 2 * Math.PI);
+      ctx.arc(centerX + 3, centerY - 3, 1.5, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // smile
+      ctx.beginPath();
+      ctx.arc(centerX, centerY + 1, 4, 0, Math.PI);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  };
 }
 
 // step5_assignment2
-this.draw = function (ctx) {
-  const centerX = this.col * 100 + 50;
-  const centerY = this.row * 100 + 50;
-
-  if (this.isClicked) {
-    ctx.fillStyle = "yellow";
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
-    ctx.fill();
-  }
-
-  ctx.fillStyle = this.color;
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
-  ctx.fill();
-};
 
 // step3_assignment2
 // refactored some functions

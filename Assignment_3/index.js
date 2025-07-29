@@ -97,8 +97,8 @@ function Piece(row, col, color) {
   this.isKing = false;
   this.checkKing = function () {
     if (
-      (this.color == "red" && this.row == 7) ||
-      (this.color == "gray" && this.row == 0)
+      (this.color == "red" && this.row == 0) ||
+      (this.color == "gray" && this.row == 7)
     ) {
       this.isKing = true;
     }
@@ -169,23 +169,17 @@ function Piece(row, col, color) {
     ctx.fill();
 
     if (this.isKing) {
-      // face
+      // eyes
       ctx.fillStyle = "white";
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
-      ctx.fill();
-
-      // eyes
-      ctx.fillStyle = "black";
-      ctx.beginPath();
-      ctx.arc(centerX - 3, centerY - 3, 1.5, 0, 2 * Math.PI);
-      ctx.arc(centerX + 3, centerY - 3, 1.5, 0, 2 * Math.PI);
+      ctx.arc(centerX - 10, centerY - 10, 3, 0, 2 * Math.PI);
+      ctx.arc(centerX + 10, centerY - 10, 3, 0, 2 * Math.PI);
       ctx.fill();
 
       // smile
       ctx.beginPath();
-      ctx.arc(centerX, centerY + 1, 4, 0, Math.PI);
-      ctx.strokeStyle = "black";
+      ctx.arc(centerX, centerY + 5, 8, 0, Math.PI);
+      ctx.strokeStyle = "white";
       ctx.lineWidth = 1;
       ctx.stroke();
     }
